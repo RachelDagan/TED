@@ -62,6 +62,9 @@ SYSTEM_PROMPT = (
 
 app = FastAPI(title="TED RAG API (LLMod + Pinecone)")
 
+@app.get("/")
+def root():
+    return {"message": "API is running"}
 
 class PromptPayload(BaseModel):
     question: str

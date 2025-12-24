@@ -1,0 +1,6 @@
+fastapi
+python-dotenv
+openai
+pinecone
+pydantic
+

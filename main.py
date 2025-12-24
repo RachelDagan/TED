@@ -238,7 +238,14 @@ def health():
 
     stats = None
     try:
-        stats = _pc_index().describe_index_stats()
+        s = _pc_index().describe_index_stats()
+        # convert Pinecone response to a plain JSON-serializable dict
+        if hasattr(s, "to_dict"):
+            stats = s.to_dict()
+        elif hasattr(s, "model_dump"):
+            stats = s.model_dump()
+        else:
+            stats = s  # fallback
     except Exception:
         stats = None
 

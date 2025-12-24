@@ -9,6 +9,7 @@ from pydantic import BaseModel
 
 from openai import OpenAI
 from pinecone import Pinecone
+from fastapi.responses import RedirectResponse
 
 load_dotenv()
 
@@ -61,6 +62,12 @@ SYSTEM_PROMPT = (
 )
 
 app = FastAPI(title="TED RAG API (LLMod + Pinecone)")
+
+from fastapi.responses import RedirectResponse
+
+@app.get("/", include_in_schema=False)
+def redirect_to_docs():
+    return RedirectResponse(url="/docs")
 
 @app.get("/")
 def root():

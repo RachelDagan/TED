@@ -235,9 +235,17 @@ def api_prompt(payload: PromptPayload) -> Dict[str, Any]:
 @app.get("/health")
 def health():
     ok = (R.client is not None) and (R.pinecone is not None) and (R.index is not None)
+
+    stats = None
+    try:
+        stats = _pc_index().describe_index_stats()
+    except Exception:
+        stats = None
+
     return {
         "ok": ok,
         "index_name": S.index_name,
         "namespace": S.namespace,
         "models": {"embedding": S.embedding_model, "chat": S.chat_model},
+        "pinecone_stats": stats,
     }
